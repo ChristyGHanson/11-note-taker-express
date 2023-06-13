@@ -4,11 +4,12 @@
 // server.js connects the back end to front end. Focus on routes. 
 const express = require('express')
 // Require fs module. This will help store and retrieve data, or the notes.
+// API for working with files and directories.
 const fs = require('fs');
+//  Path module defines utility functions for working with file and directory names
 const path = require("path")
-// Run express inside app to use it. 
+
 const app = express();
-// This is the port number that will appear alongside localhost.
 const PORT = 3000;
 
 // express() is being utilized here via app.use
@@ -22,7 +23,7 @@ app.get('/notes', (req, res) => {
 });
 
 // GET * should return the index.html file.
-// any non-existent route returns GET * which acts like a wildcard route.
+// any non-existent route returns GET *, the 'wildcard' route.
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
 });
