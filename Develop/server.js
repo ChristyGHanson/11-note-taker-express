@@ -3,11 +3,11 @@
 //require express.js to start building the server
 // server.js connects the back end to front end. Focus on routes. 
 const express = require('express')
+const uuidv4 = require('uuidv4')
 // Require fs module. This will help store and retrieve data, or the notes. API for working with files and directories.
 const fs = require('fs');
-
+const fileName = './db/db.json'
 const path = require("path") //  Path module defines utility functions for working with file and directory names
-
 const app = express();
 const PORT = 3000;
 
@@ -20,7 +20,7 @@ app.use(express.static('public'));
 // wait for the file to load before we return a response, or data in this function.
 async function readFile() {
     try {
-        const jsonString = await fs.promises.readFile('./db/db.json', 'utf-8');
+        const jsonString = await fs.promises.readFile(fileName, 'utf-8');
         const data = JSON.parse(jsonString);
         console.log("readFile executed");
         return data;
@@ -29,6 +29,7 @@ async function readFile() {
         throw err;
     }
 }
+
 
 // GET /notes should return the notes.html file.
 app.get('/notes', (req, res) => {
@@ -40,7 +41,6 @@ app.get('/notes', (req, res) => {
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, './public/index.html'))
 });
-
 
 // GET/api/notes should read the db.json file with readFile and return all saved notes as JSON.
 app.get('/api/notes', (req, res) => {
@@ -56,13 +56,6 @@ app.get('/api/notes', (req, res) => {
         });
 });
 
-
-const newObject = [{
-    "title": "Title goes here",
-    "text": "Text goes here",
-    "id": 0
-}];
-
 // JSON.stringify overwrites what we have.
 // fs.writeFile('./db.json', JSON.stringify(newObject, null, 2), err => {
 //     if (err) {
@@ -77,9 +70,34 @@ const newObject = [{
 // You'll need to find a way to give each note a unique id when it's saved.
 // (look into npm packages that could do this for you).
 app.post('./api/notes', (req, res) => {
-    req.sendFile(path.join(__dirname, './Develop/db/db.json'))
+    // request data
+    const title = req.body.title;
+    const text = req.body.text;
+    if (title && text) {
+        const newObject = {
+            "title": title,
+            "text": text,
+            "id": uuidv4()
+        };
+        fs.readFile(fileName, 'utf-8', (error, data) => {
+            if (error) {
+                console.log("Error: Could not read file");
+            } else {
+                // parse the JSON into the array in newObject
+                data = JSON.parse(data);
+                data.push(newObject);
+                data = JSON.stringify(data);
+                fs.promises.writeFile(fileName, data, (error, data) => {
+                    if (error) {
+                        console.log("Error: Could not write file");
+                    }
+                });
+            }
+        })
+    }
+    // render
+    // req.sendFile(path.join(__dirname, './Develop/db/db.json'))
 });
-
 
 // app.post('./api/notes', (req, res) => {
 //     const newNote = req.body
