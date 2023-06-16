@@ -4,6 +4,7 @@
 // server.js connects the back end to front end. Focus on routes. 
 const express = require('express');
 const { v4: uuid } = require('uuid');
+let server = require('http').Server(app);
 // Require fs module. This will help store and retrieve data, or the notes. API for working with files and directories.
 const fs = require('fs');
 const fileName = './db/db.json'
@@ -94,8 +95,9 @@ app.post('/api/notes', (req, res) => {
 
 
 // express.js library continues to be used.
-app.listen(PORT, () => {
-    console.log(`Express server listening. PORT running on http://localhost:${PORT}`)
+// app.listen
+server.listen(PORT, () => {
+    console.log(`Express server listening. App is running on port: http://localhost:${PORT}`)
 });
 
 
