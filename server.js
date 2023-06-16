@@ -56,19 +56,9 @@ app.get('/api/notes', (req, res) => {
         });
 });
 
-// JSON.stringify overwrites what we have.
-// fs.writeFile('./db.json', JSON.stringify(newObject, null, 2), err => {
-//     if (err) {
-//         console.log(err);
-//     } else {
-//         console.log('File was successfully written');
-//     }
-// });
 
 // POST /api/notes. Posting new data, or notes, to the server, or the request body, 
 // add it to the db.json file, and then return the new note to the client. 
-// You'll need to find a way to give each note a unique id when it's saved.
-// (look into npm packages that could do this for you).
 app.post('/api/notes', (req, res) => {
     // request data
     const title = req.body.title;
@@ -102,27 +92,10 @@ app.post('/api/notes', (req, res) => {
     }
 });
 
-// render
-// req.sendFile(path.join(__dirname, './Develop/db/db.json'))
-
-
-// app.post('./api/notes', (req, res) => {
-//     const newNote = req.body
-//     sendFile(path.join(__dirname, newNote),
-//         res.json(`${req.method} received`))
-// });
-
-// app.put - conclude the request to prevent client application from hanging indefinitely.  Methods attached to the res object let us conclude a req-res cycle.
-// app.put('./api/notes/:note_id', (req, res) => {
-//     // Logic to update a note
-//     res.json('Note updated');
-// });
-
 
 // express.js library continues to be used.
 app.listen(PORT, () => {
     console.log(`Express server listening. PORT running on http://localhost:${PORT}`)
 });
 
-// keep working
-// deploy to heroku
+

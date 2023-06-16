@@ -35,17 +35,17 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete.
 
 * Once the program is running, you will see this homepage in the browser. Click the blue button to start writing notes.
 
-![note-taker-app-homepage](Develop/images/img-note-taker-express.jpg)
+![note-taker-app-homepage](/images/img-note-taker-express.jpg)
 
 * Click the plus sign in the navigation bar for `New Note`.
 
-![new-note-page](Develop/images/img-note-taker-express-2.jpg)
+![new-note-page](/images/img-note-taker-express-2.jpg)
 
 * After completing a note, a `Save` icon will pop up in the navigation bar. 
 * Click the `Save` icon to save your note.
 * View any saved notes by clicking on any note in the left-hand column.
 
-![add-new-notes-and-save](Develop/images/groceries-img.jpg)
+![add-new-notes-and-save](/images/groceries-img.jpg)
 
 ## Contributing
 
