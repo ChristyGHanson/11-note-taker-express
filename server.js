@@ -9,7 +9,7 @@ const fs = require('fs');
 const fileName = './db/db.json'
 const path = require("path") //  Path module defines utility functions for working with file and directory names
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // express() is being utilized here via app.use
 app.use(express.json());
