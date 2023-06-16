@@ -31,7 +31,7 @@ SO THAT I can organize my thoughts and keep track of tasks I need to complete.
 
 ### Heroku
 
-* Visit the Heroku deployment [here](link). 
+* Visit the Heroku deployment [here](https://profile-tool-10-20b598854352.herokuapp.com/). 
 
 * Once the program is running, you will see this homepage in the browser. Click the blue button to start writing notes.
 
