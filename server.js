@@ -4,12 +4,13 @@
 // server.js connects the back end to front end. Focus on routes. 
 const express = require('express');
 const { v4: uuid } = require('uuid');
-let server = require('http').Server(app);
+
 // Require fs module. This will help store and retrieve data, or the notes. API for working with files and directories.
 const fs = require('fs');
 const fileName = './db/db.json'
 const path = require("path") //  Path module defines utility functions for working with file and directory names
 const app = express();
+let server = require('http').Server(app);
 const PORT = process.env.PORT || 3000;
 
 // express() is being utilized here via app.use
