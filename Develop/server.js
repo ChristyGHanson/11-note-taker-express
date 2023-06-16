@@ -2,8 +2,8 @@
 // This will be used to store and retrieve notes using the fs module.
 //require express.js to start building the server
 // server.js connects the back end to front end. Focus on routes. 
-const express = require('express')
-const uuidv4 = require('uuidv4')
+const express = require('express');
+const { v4: uuid } = require('uuid');
 // Require fs module. This will help store and retrieve data, or the notes. API for working with files and directories.
 const fs = require('fs');
 const fileName = './db/db.json'
@@ -28,7 +28,7 @@ async function readFile() {
         console.log('Error reading file:', err);
         throw err;
     }
-}
+};
 
 
 // GET /notes should return the notes.html file.
@@ -38,8 +38,8 @@ app.get('/notes', (req, res) => {
 
 // GET * should return the index.html file.
 // any non-existent route returns GET *, the 'wildcard' route.
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, './public/index.html'))
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, '/public/index.html'))
 });
 
 // GET/api/notes should read the db.json file with readFile and return all saved notes as JSON.
@@ -69,16 +69,18 @@ app.get('/api/notes', (req, res) => {
 // add it to the db.json file, and then return the new note to the client. 
 // You'll need to find a way to give each note a unique id when it's saved.
 // (look into npm packages that could do this for you).
-app.post('./api/notes', (req, res) => {
+app.post('/api/notes', (req, res) => {
     // request data
     const title = req.body.title;
     const text = req.body.text;
+    const id = uuid();
     if (title && text) {
         const newObject = {
             "title": title,
             "text": text,
-            "id": uuidv4()
+            "id": id
         };
+
         fs.readFile(fileName, 'utf-8', (error, data) => {
             if (error) {
                 console.log("Error: Could not read file");
@@ -87,17 +89,22 @@ app.post('./api/notes', (req, res) => {
                 data = JSON.parse(data);
                 data.push(newObject);
                 data = JSON.stringify(data);
-                fs.promises.writeFile(fileName, data, (error, data) => {
+                fs.promises.writeFile(fileName, data).then((error, newNote) => {
                     if (error) {
-                        console.log("Error: Could not write file");
+                        res.status(500).json(error);
+                    }
+                    else {
+                        res.status(200).json(newNote);
                     }
                 });
             }
         })
     }
-    // render
-    // req.sendFile(path.join(__dirname, './Develop/db/db.json'))
 });
+
+// render
+// req.sendFile(path.join(__dirname, './Develop/db/db.json'))
+
 
 // app.post('./api/notes', (req, res) => {
 //     const newNote = req.body
