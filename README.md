@@ -1,4 +1,4 @@
-# Note Take Express
+# Note Taker Express
 
 ## Table of Contents
 
